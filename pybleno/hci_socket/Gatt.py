@@ -882,10 +882,13 @@ class Gatt:
 
     def handleConfirmation(self, request):
         if self._lastIndicatedAttribute:
+            temp_emit = None
             if self._lastIndicatedAttribute.emit:
-                self._lastIndicatedAttribute.emit('indicate', [])
+                temp_emit = self._lastIndicatedAttribute.emit
 
             self._lastIndicatedAttribute = None
+            if temp_emit:
+                temp_emit('indicate', [])
 
 
 Emit.Patch(Gatt)
